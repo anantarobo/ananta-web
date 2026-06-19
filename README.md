@@ -1,16 +1,28 @@
-# React + Vite
+# Ananta Robotics Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite one-page site for ANANTA ROBOTICS.
 
-Currently, two official plugins are available:
+## Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+cp .env.example .env   # add your Apps Script URL
+npm run dev
+```
 
-## React Compiler
+## Contact form → Google Sheet
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Open sheet → **Extensions → Apps Script**
+2. Paste `google-apps-script/Code.gs` → Save → Deploy as Web app (Anyone)
+3. Add URL to `.env`:
+   ```
+   VITE_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/xxxxx/exec
+   ```
 
-## Expanding the ESLint configuration
+## Build
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm run build
+```
+
+Upload `dist/` to your hosting.

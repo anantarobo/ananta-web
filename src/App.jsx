@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Logo from './components/Logo'
 import BeforeAfter from './components/BeforeAfter'
 import VideoShowcase from './components/VideoShowcase'
+import ContactForm from './components/ContactForm'
 import WhatsAppFloat from './components/WhatsAppFloat'
 import './App.css'
 
@@ -42,16 +43,8 @@ const BEFORE_AFTER = [
 ]
 
 const VIDEOS = [
-  {
-    title: 'Robot in Action',
-    vimeoId: '1202735700',
-    poster: '/image1.jpeg',
-  },
-  {
-    title: 'Field Deployment',
-    vimeoId: '1202735701',
-    poster: '/image3.jpeg',
-  },
+  { title: 'Robot in Action', vimeoId: '1202735700' },
+  { title: 'Field Deployment', vimeoId: '1202735701' },
 ]
 
 const FOOTER_LINKS = [
@@ -334,11 +327,8 @@ function Contact() {
           <div className="cta-main">
             <span className="cta-label">Get in Touch</span>
             <h2>Ready to recover your lost solar energy?</h2>
-            <p>Talk to our experts and get a customized solution for your plant.</p>
-            <div className="cta-actions">
-              <a href="mailto:anantarobotics925@gmail.com" className="btn btn-primary">Get a Quote</a>
-              <a href="tel:+919512494999" className="btn btn-outline">Call Us Now</a>
-            </div>
+            <p>Fill the form and our team will contact you with a customized solution.</p>
+            <ContactForm />
             <div className="cta-trust">
               <span>✓ Free consultation</span>
               <span>✓ Custom ROI analysis</span>
