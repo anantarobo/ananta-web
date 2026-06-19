@@ -78,6 +78,14 @@ function Navbar() {
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 1100) setMenuOpen(false)
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
   return (
     <>
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
@@ -132,29 +140,31 @@ function Hero() {
   return (
     <section id="home" className="hero">
       <div className="hero-grid" />
-      <div className="container hero-layout">
-        <div className="hero-content">
-          <div className="hero-badge">Welcome to ANANTA ROBOTICS 🚀</div>
-          <h1>
-            Innovating the Future of{' '}
-            <span className="highlight">Human Life.</span>
-          </h1>
-          <p className="hero-sub">
-            ⚙️✨ Autonomous solar panel cleaning robots — waterless, labour-free,
-            and built to recover lost energy generation.
-          </p>
-          <p className="hero-tagline">
-            Thank you for connecting with us! We look forward to collaborating
-            and bringing your ideas to life.
-          </p>
-          <div className="hero-actions">
-            <a href="#contact" className="btn btn-primary">Get a Quote</a>
-            <a href="#video" className="btn btn-ghost">Watch Video</a>
+      <div className="container container--hero">
+        <div className="hero-layout">
+          <div className="hero-content">
+            <div className="hero-badge">Welcome to ANANTA ROBOTICS 🚀</div>
+            <h1>
+              Innovating the Future of{' '}
+              <span className="highlight">Human Life.</span>
+            </h1>
+            <p className="hero-sub">
+              ⚙️✨ Autonomous solar panel cleaning robots — waterless, labour-free,
+              and built to recover lost energy generation.
+            </p>
+            <p className="hero-tagline">
+              Thank you for connecting with us! We look forward to collaborating
+              and bringing your ideas to life.
+            </p>
+            <div className="hero-actions">
+              <a href="#contact" className="btn btn-primary">Get a Quote</a>
+              <a href="#video" className="btn btn-ghost">Watch Video</a>
+            </div>
           </div>
-        </div>
-        <div className="hero-visual">
-          <div className="hero-image-frame">
-            <img src="/image1.jpeg" alt="Ananta Robotics solar cleaning robot" />
+          <div className="hero-visual">
+            <div className="hero-image-frame">
+              <img src="/image1.jpeg" alt="Ananta Robotics solar cleaning robot" />
+            </div>
           </div>
         </div>
       </div>

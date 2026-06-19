@@ -14,6 +14,8 @@
   --radius: 12px;
   --radius-lg: 20px;
   --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --nav-height: 72px;
+  --container-pad: 24px;
 }
 
 *,
@@ -36,6 +38,13 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
 }
 
 a {
@@ -45,6 +54,7 @@ a {
 
 img {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -63,7 +73,8 @@ ul {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding-left: max(var(--container-pad), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--container-pad), env(safe-area-inset-right, 0px));
 }
 
 .section {
@@ -81,11 +92,12 @@ ul {
 }
 
 .section-title {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 700;
   line-height: 1.2;
   color: var(--primary);
   margin-bottom: 16px;
+  word-wrap: break-word;
 }
 
 .section-desc {
@@ -140,16 +152,22 @@ ul {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --nav-height: 64px;
+    --container-pad: 20px;
+  }
+
   .container {
-    padding: 0 16px;
+    padding-left: max(var(--container-pad), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--container-pad), env(safe-area-inset-right, 0px));
   }
 
   .section {
-    padding: 56px 0;
+    padding: 48px 0;
   }
 
   .section-header-center {
-    margin-bottom: 36px;
+    margin-bottom: 32px;
   }
 
   .section-desc {
@@ -160,5 +178,15 @@ ul {
     padding: 13px 20px;
     font-size: 0.875rem;
     min-height: 48px;
+  }
+}
+
+@media (max-width: 380px) {
+  :root {
+    --container-pad: 16px;
+  }
+
+  .section {
+    padding: 40px 0;
   }
 }
