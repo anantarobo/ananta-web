@@ -3,6 +3,7 @@ import Logo from './components/Logo'
 import BeforeAfter from './components/BeforeAfter'
 import VideoShowcase from './components/VideoShowcase'
 import ContactForm from './components/ContactForm'
+import TestimonialsCarousel from './components/TestimonialsCarousel'
 import WhatsAppFloat from './components/WhatsAppFloat'
 import './App.css'
 
@@ -12,6 +13,7 @@ const NAV_LINKS = [
   { label: 'Results', href: '#results' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Video', href: '#video' },
+  { label: 'Reviews', href: '#testimonials' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -31,14 +33,9 @@ const GALLERY = [
 
 const BEFORE_AFTER = [
   {
-    title: 'Rooftop Solar — Set 1',
+    title: 'Rooftop Solar',
     before: '/beforeimage1.png',
     after: '/afterimage1.png',
-  },
-  {
-    title: 'Rooftop Solar — Set 2',
-    before: '/beforeimage2.jpeg',
-    after: '/afterimage2.jpeg',
   },
 ]
 
@@ -47,12 +44,46 @@ const VIDEOS = [
   { title: 'Field Deployment', vimeoId: '1202735701' },
 ]
 
+const TESTIMONIALS = [
+  {
+    name: 'Jignesh Patel',
+    location: 'Adajan, Surat',
+    quote:
+      'After installing the Solar Cleaning Robot from ANANTA ROBOTICS, maintaining my solar panels has become effortless. The automatic cleaning schedule keeps the panels dust-free and performing efficiently every day.',
+  },
+  {
+    name: 'Hitesh Gajera',
+    location: 'Vesu, Surat',
+    quote:
+      'This robot has saved both time and maintenance costs. The installation was smooth, and the overall performance has exceeded my expectations. A great investment for any solar panel owner.',
+  },
+  {
+    name: 'Milan Desai',
+    location: 'Katargam, Surat',
+    quote:
+      'I was looking for an automated solution for cleaning my rooftop solar panels, and this product delivered exactly that. Reliable, efficient, and easy to use. Highly recommended.',
+  },
+  {
+    name: 'Ketan Bhimani',
+    location: 'Varachha, Surat',
+    quote:
+      'Dust and dirt were affecting my solar panel performance. Now the robot cleans regularly, and I can clearly see a positive difference in power generation.',
+  },
+  {
+    name: 'Dhaval Savani',
+    location: 'Piplod, Surat',
+    quote:
+      'This solution from ANANTA ROBOTICS is very practical and reliable. Automatic operation and low maintenance make it extremely easy to use.',
+  },
+]
+
 const FOOTER_LINKS = [
   { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
   { label: 'Results', href: '#results' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Video', href: '#video' },
+  { label: 'Reviews', href: '#testimonials' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -319,6 +350,24 @@ function VideoSection() {
   )
 }
 
+function Testimonials() {
+  return (
+    <section id="testimonials" className="section testimonials">
+      <div className="container">
+        <div className="section-header-center">
+          <span className="section-label">Testimonials</span>
+          <h2 className="section-title">What our customers say</h2>
+          <p className="section-desc">
+            Real feedback from solar panel owners across Surat who trust
+            ANANTA ROBOTICS for automated cleaning.
+          </p>
+        </div>
+        <TestimonialsCarousel testimonials={TESTIMONIALS} />
+      </div>
+    </section>
+  )
+}
+
 function Contact() {
   return (
     <section id="contact" className="cta">
@@ -417,6 +466,7 @@ export default function App() {
       <Results />
       <Gallery />
       <VideoSection />
+      <Testimonials />
       <Contact />
       <Footer />
       <WhatsAppFloat />
