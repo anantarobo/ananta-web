@@ -4,6 +4,7 @@ import BeforeAfter from './components/BeforeAfter'
 import VideoShowcase from './components/VideoShowcase'
 import ContactForm from './components/ContactForm'
 import TestimonialsCarousel from './components/TestimonialsCarousel'
+import Seo from './components/Seo'
 import WhatsAppFloat from './components/WhatsAppFloat'
 import './App.css'
 
@@ -459,6 +460,7 @@ function Footer() {
 export default function App() {
   return (
     <>
+      <Seo />
       <Navbar />
       <Hero />
       <Stats />
