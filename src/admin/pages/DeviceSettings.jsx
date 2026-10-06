@@ -28,7 +28,7 @@ const SettingRow = ({ icon: Icon, label, description, unit, isToggle, fieldKey, 
           </div>
         )}
         <div>
-          <h4 className="text-sm font-semibold text-slate-200">{label}</h4>
+          <h4 className="text-sm font-semibold text-[#1a2b3c]">{label}</h4>
           {description && <p className="text-xs text-[#5a6b7c] mt-0.5">{description}</p>}
         </div>
       </div>
@@ -36,9 +36,9 @@ const SettingRow = ({ icon: Icon, label, description, unit, isToggle, fieldKey, 
         {isToggle ? (
           <div 
             onClick={() => onChange(fieldKey, !value)}
-            className={`w-12 h-6 rounded-full p-1 cursor-pointer transition-colors ${value ? 'bg-[#015a82]' : 'bg-slate-100'}`}
+            className={`w-12 h-6 rounded-full p-1 cursor-pointer transition-colors ${value ? 'bg-[#015a82]' : 'bg-slate-300'}`}
           >
-            <div className={`w-4 h-4 rounded-full bg-white transition-transform ${value ? 'translate-x-6' : 'translate-x-0'}`}></div>
+            <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${value ? 'translate-x-6' : 'translate-x-0'}`}></div>
           </div>
         ) : (
           <div className="flex items-center justify-end gap-2 group w-32">
@@ -162,7 +162,7 @@ export default function DeviceSettings() {
               <SettingsIcon className="w-8 h-8 text-[#027aad]" />
               Device Configuration
             </h1>
-            <p className="text-[#5a6b7c] mt-1 font-mono text-sm">Device: {id}</p>
+            {/* <p className="text-[#5a6b7c] mt-1 font-mono text-sm">Device: {id}</p> */}
           </div>
         </div>
         <button 

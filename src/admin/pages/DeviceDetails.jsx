@@ -234,7 +234,7 @@ export default function DeviceDetails() {
           </button>
           <div>
             <h1 className="text-3xl font-bold text-[#1a2b3c] tracking-tight">{device.deviceName || 'Unknown Device'}</h1>
-            <p className="text-[#5a6b7c] mt-1 font-mono text-sm">Serial: {device.deviceId}</p>
+            <p className="text-[#5a6b7c] mt-1 font-mono text-sm">Device ID: {device.deviceId}</p>
           </div>
         </div>
         
