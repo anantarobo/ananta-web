@@ -26,7 +26,8 @@ import {
   Trash2,
   History,
   Settings,
-  UploadCloud
+  UploadCloud,
+  LineChart
 } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { postData } from '../services/api'
@@ -251,6 +252,13 @@ export default function DeviceDetails() {
             title="OTA Update"
           >
             <UploadCloud className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => navigate(`/dashboard/devices/${id}/graph`)}
+            className="p-2.5 rounded-xl border border-teal-500/20 bg-teal-500/10 text-teal-600 hover:bg-teal-500/20 transition-colors shadow-sm"
+            title="Telemetry Graph"
+          >
+            <LineChart className="w-5 h-5" />
           </button>
           <button
             onClick={() => navigate(`/dashboard/devices/${id}/settings`)}

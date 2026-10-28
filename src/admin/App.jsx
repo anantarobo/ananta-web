@@ -17,6 +17,7 @@ import UserSchedules from './pages/UserSchedules'
 import DeviceDetails from './pages/DeviceDetails'
 import DeviceHistory from './pages/DeviceHistory'
 import DeviceSettings from './pages/DeviceSettings'
+import DeviceGraph from './pages/DeviceGraph'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -66,6 +67,7 @@ function App() {
             {/* Sub-pages */}
             <Route path="devices" element={<Devices />} />
             <Route path="devices/:id" element={<DeviceDetails />} />
+            <Route path="devices/:id/graph" element={<DeviceGraph />} />
             <Route path="devices/:id/history" element={<DeviceHistory />} />
             <Route path="devices/:id/settings" element={<DeviceSettings />} />
             <Route path="users" element={<Users />} />
