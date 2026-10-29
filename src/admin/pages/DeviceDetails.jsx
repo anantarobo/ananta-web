@@ -27,7 +27,8 @@ import {
   History,
   Settings,
   UploadCloud,
-  LineChart
+  LineChart,
+  RefreshCw
 } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { postData } from '../services/api'
@@ -80,6 +81,40 @@ export default function DeviceDetails() {
   const [otaFile, setOtaFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isCommandSending, setIsCommandSending] = useState(false);
+  const [isFetchingVersion, setIsFetchingVersion] = useState(false);
+  const [otaVersions, setOtaVersions] = useState({ firmware: '', filesystem: '' });
+
+  const fetchDeviceVersions = async (targetDeviceId) => {
+    const devId = targetDeviceId || id;
+    if (!devId) return;
+    setIsFetchingVersion(true);
+    try {
+      const res = await postData('/ota/devices/fetch-version', { deviceId: devId });
+      if (res && res.success && res.data) {
+        setOtaVersions({
+          firmware: res.data.firmwareVersion || '',
+          filesystem: res.data.filesystemVersion || ''
+        });
+        setDevice(prev => prev ? {
+          ...prev,
+          firmwareVersion: res.data.firmwareVersion || prev.firmwareVersion,
+          filesystemVersion: res.data.filesystemVersion || prev.filesystemVersion
+        } : prev);
+      }
+    } catch (err) {
+      console.warn('Failed to fetch versions via TCP, fallback to device details:', err);
+    } finally {
+      setIsFetchingVersion(false);
+    }
+  };
+
+  const handleOpenOtaModal = () => {
+    setOtaVersions({
+      firmware: device?.firmwareVersion || '',
+      filesystem: device?.filesystemVersion || ''
+    });
+    setOtaModalOpen(true);
+  };
 
   useEffect(() => {
     if (fetchedId.current === id) return;
@@ -97,6 +132,13 @@ export default function DeviceDetails() {
             ...dev,
             userObj: user
           });
+          setOtaVersions({
+            firmware: dev.firmwareVersion || '',
+            filesystem: dev.filesystemVersion || ''
+          });
+
+          // Fetch latest versions via TCP once when user enters the page
+          fetchDeviceVersions(id);
         } else {
           toast.error(data?.message || 'Failed to fetch device details');
         }
@@ -179,6 +221,24 @@ export default function DeviceDetails() {
       
       if (data && data.success !== false) {
         toast.success('OTA file uploaded successfully', { id: toastId });
+        
+        // Update versions in state if returned
+        const respData = data?.data || data?.device_response;
+        const newFw = respData?.firmwareVersion || respData?.fw;
+        const newFs = respData?.filesystemVersion || respData?.fs;
+        if (newFw || newFs) {
+          setDevice(prev => prev ? {
+            ...prev,
+            ...(newFw ? { firmwareVersion: String(newFw) } : {}),
+            ...(newFs ? { filesystemVersion: String(newFs) } : {})
+          } : prev);
+          setOtaVersions(prev => ({
+            ...prev,
+            ...(newFw ? { firmware: String(newFw) } : {}),
+            ...(newFs ? { filesystem: String(newFs) } : {})
+          }));
+        }
+
         setOtaModalOpen(false);
         setOtaFile(null);
         setOtaTarget('firmware');
@@ -247,7 +307,7 @@ export default function DeviceDetails() {
             </div>
           )}
           <button
-            onClick={() => setOtaModalOpen(true)}
+            onClick={handleOpenOtaModal}
             className="p-2.5 rounded-xl border border-indigo-500/20 bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 transition-colors shadow-sm"
             title="OTA Update"
           >
@@ -483,10 +543,38 @@ export default function DeviceDetails() {
       {otaModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white border border-[#e2eaf0] w-full max-w-md rounded-2xl p-6 shadow-2xl relative">
-            <h2 className="text-xl font-bold text-[#1a2b3c] mb-6 flex items-center gap-2">
-              <UploadCloud className="w-5 h-5 text-indigo-400" />
-              OTA Update
-            </h2>
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-xl font-bold text-[#1a2b3c] flex items-center gap-2">
+                <UploadCloud className="w-5 h-5 text-indigo-400" />
+                OTA Update
+              </h2>
+            </div>
+
+            {/* Current Versions Display */}
+            <div className="bg-[#f8fafc] border border-[#e2eaf0] rounded-xl p-3.5 mb-5 space-y-2">
+              <div className="flex items-center justify-between text-xs text-[#5a6b7c]">
+                <span className="font-semibold uppercase tracking-wider">Device Versions</span>
+                {isFetchingVersion && (
+                  <span className="inline-flex items-center gap-1 text-indigo-600">
+                    <Loader2 className="w-3 h-3 animate-spin" /> Fetching live...
+                  </span>
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                <div className="bg-white border border-[#e2eaf0] rounded-lg p-2.5">
+                  <div className="text-[11px] font-medium text-[#5a6b7c]">Firmware Version</div>
+                  <div className="text-sm font-bold text-[#1a2b3c] font-mono mt-0.5">
+                    {otaVersions.firmware || device?.firmwareVersion || (isFetchingVersion ? '...' : '--')}
+                  </div>
+                </div>
+                <div className="bg-white border border-[#e2eaf0] rounded-lg p-2.5">
+                  <div className="text-[11px] font-medium text-[#5a6b7c]">Filesystem Version</div>
+                  <div className="text-sm font-bold text-[#1a2b3c] font-mono mt-0.5">
+                    {otaVersions.filesystem || device?.filesystemVersion || (isFetchingVersion ? '...' : '--')}
+                  </div>
+                </div>
+              </div>
+            </div>
             
             <form onSubmit={handleOtaSubmit} className="space-y-4">
               <div>
